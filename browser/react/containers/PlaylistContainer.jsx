@@ -3,6 +3,7 @@ import store from '../store';
 import Playlist from '../components/Playlist';
 import { fetchPlaylist, addSong } from '../action-creators/playlists';
 import { start } from  '../action-creators/player';
+import { fetchSongs } from '../action-creators/songs';
 
 export default class PlaylistContainer extends React.Component {
   constructor(props) {
@@ -29,12 +30,12 @@ export default class PlaylistContainer extends React.Component {
     store.dispatch(fetchPlaylist(id));
   }
 
-  start(song) {
-    store.dispatch(start(song));
+  start(song, list) {
+    store.dispatch(start(song, list));
   }
 
-  addSong() {
-    return store.dispatch(addSong());
+  addSong(song) {
+    return store.dispatch(addSong(song));
   }
   render() {
     return (
