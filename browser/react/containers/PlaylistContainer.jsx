@@ -14,6 +14,7 @@ export default class PlaylistContainer extends React.Component {
       this.setState(store.getState());
     });
     this.fetchPlaylist(this.props.match.params.id);
+    store.dispatch(fetchSongs());
   }
   
   componentWillReceiveProps(nextProps) {
@@ -42,6 +43,7 @@ export default class PlaylistContainer extends React.Component {
         start={this.start}
         currentSong={this.state.player.currentSong}
         addSong={this.addSong}
+        songs={this.state.songs}
       />
     );
   }
