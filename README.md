@@ -589,7 +589,7 @@ Nuestra UI para el componente `Station` (singular) va a ser bastante simple. Es 
 
 ![jazz-station](jazz-station.png)
 
-1. Escribí un nuevo componente stateless llamado `Station.js`. Sentite libre de tomar el JSX de abajo, pero quizás trata de hacerlo funcionar tu mismo primero. Nota que el componente `Songs` espera varias props, por ahora, solo mockealas así podemos hacer que el componente se renderize sin ningún error. Fijáte si podes hacer que se vea como el screenshot de arriba.  
+1. Escribí un nuevo componente stateless llamado `Station.jsx`. Sentite libre de tomar el JSX de abajo, pero quizás trata de hacerlo funcionar tu mismo primero. Nota que el componente `Songs` espera varias props, por ahora, solo mockealas así podemos hacer que el componente se renderize sin ningún error. Fijáte si podes hacer que se vea como el screenshot de arriba.  
 
 |||
 ```JSX
@@ -605,8 +605,7 @@ const DUMMY_SONGS = [{
   artists: [{ name: "John Coltrane" }]
 }];
 const DUMMY_CURRENT_SONG = {};
-const DUMMY_IS_PLAYING = false;
-const DUMMY_TOGGLE_ONE = function () {};
+const DUMMY_START = function () {};
 
 export default function (props) {
   return (
@@ -615,8 +614,7 @@ export default function (props) {
       <Songs 
         songs={DUMMY_SONGS} 
         currentSong={DUMMY_CURRENT_SONG} 
-        isPlaying={DUMMY_IS_PLAYING} 
-        toggleOne={DUMMY_TOGGLE_ONE}
+        start={DUMMY_START}
       />
     </div>
   );
@@ -624,7 +622,7 @@ export default function (props) {
 ```
 |||
 
-2. Escribí una nueva `RouteHook` que renderize el componente cuando la url matchea `/stations/:genreName`.
+2. Escribí una nueva `Route` que renderize el componente cuando la url matchea `/stations/:genreName`.
 |||
 ```JSX
 <Route path="/stations/:genreName" component={Station} />
@@ -751,7 +749,6 @@ export default StationContainer;
 
 |||
 ```JSX
-<RouteHook exact path="/stations" component={StationsContainer} onEnter={onStationsEnter} />
 <RouteHook path="/stations/:genreName" component={StationContainer} onEnter={onStationsEnter} />
 ```
 |||
@@ -788,7 +785,7 @@ const mapStateToProps = function (state, ownProps) {
 ```js
 const mapStateToProps = function (state, ownProps) {
   return {
-    genreName: ownProps.params.genreName,
+    genreName: ownProps.match.params.genreName,
     songs: state.songs
       .filter(song => song.genre === ownProps.match.params.genreName),
     currentSong: state.player.currentSong,
@@ -843,7 +840,6 @@ export default function (props) {
       <Songs
         songs={songs}
         currentSong={currentSong}
-        isPlaying={isPlaying}
         start={start}
       />
     </div>
