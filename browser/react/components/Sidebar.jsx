@@ -22,7 +22,7 @@ export default ({ playlists }) => (
         </section>
         <section>
           <h4 className="menu-item active">
-            <Link to="/station">STATIONS</Link>
+            <Link to="/stations">STATIONS</Link>
           </h4>
         </section>
         <hr />

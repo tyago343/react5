@@ -9,29 +9,33 @@ import ArtistContainer from '../containers/ArtistContainer';
 import NewPlaylistContainer from '../containers/NewPlaylistContainer';
 import LyricsContainer from '../containers/LyricsContainer';
 import PlaylistContainer from '../containers/PlaylistContainer';
-import Station from '../containers/StationsContainer';
-import store from '../store'
-import Routehook from 'react-route-hook';
+import StationsContainer from '../containers/StationsContainer';
+import StationContainer from '../containers/StationContainer.jsx'
 import { fetchSongs } from '../action-creators/songs';
-import SingleStation from '../components/SingleStation';
-
-const OnStationEnter = () => {
-  store.dispatch(fetchSongs())
-}
+import RouteHook from 'react-route-hook';
+import store from '../store.js';
+import {fetchAlbums} from '../action-creators/albums'
+const onStationsEnter = () => {
+  store.dispatch(fetchSongs());
+};
+const onAlbumsEnter = () => {
+  store.dispatch(fetchAlbums())
+  onStationsEnter();
+};
 export default () => (
   <div id="main" className="container-fluid">
     <SidebarContainer />
     <div className="col-xs-10">
       <Switch>
-        <Route path='/station/:genreName' component={SingleStation} />
-        <Routehook exact path="/station" component={Station} onEnter={OnStationEnter}/>
-        <Route exact path="/albums" component={AlbumsContainer} />
-        <Route path="/albums/:id" component={AlbumContainer} />
+        <RouteHook exact path="/albums" component={AlbumsContainer} onEnter={onAlbumsEnter}/>
+        <RouteHook path="/albums/:id" component={AlbumContainer} onEnter={onAlbumsEnter}/>
         <Route path="/artists" exact component={FilterableArtistsContainer} />
         <Route path="/artists/:id" component={ArtistContainer} />
         <Route path="/playlists/new" component={NewPlaylistContainer} />
         <Route path="/playlists/:id" component={PlaylistContainer} />
         <Route path="/lyrics" component={LyricsContainer} />
+        <RouteHook exact path="/stations" component={StationsContainer} onEnter={onStationsEnter} />
+        <RouteHook exact path="/stations/:genreName" component={StationContainer} onEnter={onStationsEnter} />
         <Redirect from="/" to="/albums" />
       </Switch>
     </div>

@@ -1,16 +1,19 @@
 import React from 'react';
 import Songs from './Songs';
 
-export default ({ album, start, currentSong })  => (
+export default function ({ album, start, currentSong, songs }) {
+  console.log(album)
+  return(
   <div className="album">
-    <div>
+    {album && <div>
       <h3>{album.name}</h3>
       <img src={`/api/albums/${album.id}/image`} className="img-thumbnail" />
-    </div>
+    </div>}
     <Songs 
-      songs={album.songs}
+      songs={songs}
       start={start}
       currentSong={currentSong}
     />
   </div>
-);
+  )
+};

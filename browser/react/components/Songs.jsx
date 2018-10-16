@@ -22,7 +22,7 @@ export default ({ currentSong, start, songs }) => (
               null}
           </td>
           <td>{song.name}</td>
-          <td>{song.artists.map(artist => artist.name).join(', ')}</td>
+          <td>{songs.artists && song.artists.map(artist => artist.name).join(', ')}</td>
           <td>{song.genre}</td>
         </tr>
       )}
